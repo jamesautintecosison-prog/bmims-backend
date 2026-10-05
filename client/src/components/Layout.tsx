@@ -12,6 +12,7 @@ interface NavItem {
 const NAV: NavItem[] = [
   { to: "/residents", label: "Residents", roles: ["admin", "staff"] },
   { to: "/profile", label: "My record", roles: ["resident"] },
+  { to: "/requests", label: "Service requests", roles: ["admin", "staff", "resident"] },
 ];
 
 export function Layout() {
