@@ -15,3 +15,7 @@ export const clients = {
 } as const;
 
 export type Tier = keyof typeof clients;
+
+// auth_role can only SELECT from users. It is used for login lookups and
+// is never used for anything a signed-in user does.
+export const authClient = makeClient(env.authUrl);
