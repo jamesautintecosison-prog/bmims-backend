@@ -22,7 +22,7 @@ const tokenPayload = z.object({
 });
 
 // Reads "Authorization: Bearer <token>", verifies the signature, and sets
-// the request context (database tier + staff/resident id) from the token.
+// the request context (database tier + user/staff/resident id) from the token.
 // The client can no longer claim a tier by typing a header.
 export function authenticate(req: Request, _res: Response, next: NextFunction) {
   const header = req.header("authorization") ?? "";
@@ -41,6 +41,7 @@ export function authenticate(req: Request, _res: Response, next: NextFunction) {
   req.userId = Number(claims.sub);
   req.ctx = {
     tier: claims.tier,
+    userId: req.userId,
     staffId: claims.staffId,
     residentId: claims.residentId,
   };
