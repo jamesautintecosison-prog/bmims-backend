@@ -5,20 +5,17 @@ import { idParam, pageQuery } from "../../utils/pagination.js";
 import { ctxOf } from "../../utils/requestContext.js";
 import { incidentsRepository as repo } from "./incidents.repository.js";
 
+const participant = z.object({
+  resident_id: z.number().int().positive(),
+  participant_role: z.enum(["complainant", "respondent", "witness"]),
+  statement: z.string().trim().max(2000).nullable().optional(),
+});
+
 const fileBody = z.object({
   committee_id: z.number().int().positive(),
   location: z.string().trim().min(1).max(255),
   description: z.string().trim().min(1).max(5000),
-  participants: z
-    .array(
-      z.object({
-        resident_id: z.number().int().positive(),
-        participant_role: z.enum(["complainant", "respondent", "witness"]),
-        statement: z.string().trim().max(2000).nullable().optional(),
-      }),
-    )
-    .min(1)
-    .max(50),
+  participants: z.array(participant).min(1).max(50),
 });
 
 const statusBody = z.object({
@@ -41,6 +38,13 @@ export const incidentsController = {
     const ctx = ctxOf(req);
     const incidentId = await repo.file(ctx, fileBody.parse(req.body));
     res.status(201).json({ incident_id: incidentId });
+  },
+
+  async addParticipant(req: Request, res: Response) {
+    const ctx = ctxOf(req);
+    const incidentId = idParam.parse(req.params.id);
+    const participantId = await repo.addParticipant(ctx, incidentId, participant.parse(req.body));
+    res.status(201).json({ participant_id: participantId });
   },
 
   async updateStatus(req: Request, res: Response) {
