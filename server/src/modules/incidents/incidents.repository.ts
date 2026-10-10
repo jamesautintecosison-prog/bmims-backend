@@ -43,6 +43,20 @@ export const incidentsRepository = {
     });
   },
 
+  // Adds one more person to an existing incident (migration 010)
+  addParticipant(ctx: RequestContext, incidentId: number, input: ParticipantInput) {
+    return withRequestContext(ctx, async (tx) => {
+      const rows = await tx.$queryRaw<{ participant_id: number }[]>`
+        SELECT sp_add_incident_participant(
+          ${incidentId}::int,
+          ${input.resident_id}::int,
+          ${input.participant_role},
+          ${input.statement ?? null}::text
+        ) AS participant_id`;
+      return rows[0].participant_id;
+    });
+  },
+
   updateStatus(ctx: RequestContext, id: number, status: string) {
     return withRequestContext(ctx, (tx) =>
       tx.incident_reports.update({ where: { incident_id: id }, data: { status } }),
