@@ -3,12 +3,15 @@ import { ZodError } from "zod";
 import { HttpError } from "../utils/httpError.js";
 
 // Messages raised on purpose by the triggers and stored procedures
-// (migrations 007 and 008). They are safe to show to the caller.
+// (migrations 007, 008 and 010). They are safe to show to the caller.
 const BUSINESS_RULE = new RegExp(
   [
     "Insufficient budget: [^\"\\\\\\n]*",
     "Only staff can issue certificates",
+    "Only staff can add participants",
     "Service request \\d+ does not exist",
+    "Incident \\d+ does not exist",
+    "Incident \\d+ is already [^\"\\\\\\n]*",
     "Staff \\d+ is not assigned [^\"\\\\\\n]*",
     "Request \\d+ cannot be issued[^\"\\\\\\n]*",
     "Resident is not eligible[^\"\\\\\\n]*",

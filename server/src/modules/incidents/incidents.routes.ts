@@ -7,4 +7,5 @@ export const incidentsRouter = Router();
 incidentsRouter.get("/", asyncHandler(c.list));
 incidentsRouter.get("/:id", asyncHandler(c.get));
 incidentsRouter.post("/", asyncHandler(c.file));
+incidentsRouter.post("/:id/participants", asyncHandler(c.addParticipant));
 incidentsRouter.patch("/:id/status", asyncHandler(c.updateStatus));
