@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 
-// Load the project-root .env (the server is started from /server)
+// Load the project-root .env when it exists (local development).
+// On a host, the same names come from the host's environment settings.
 dotenv.config({ path: "../.env" });
 
 function required(name: string): string {
@@ -24,4 +25,12 @@ export const env = {
   authUrl: required("AUTH_DATABASE_URL"),
   jwtSecret,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "1h",
+  // Web addresses of the front-end allowed to call this API (comma-separated)
+  clientOrigins: (process.env.CLIENT_ORIGIN ?? "http://localhost:5173")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+  // How many reverse proxies sit in front of the API: 0 locally, 1 on most hosts.
+  // Needed so rate limiting sees each visitor's real address.
+  trustProxy: Number(process.env.TRUST_PROXY ?? 0),
 };

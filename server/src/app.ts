@@ -1,6 +1,9 @@
 import "./utils/serialization.js";
 import cors from "cors";
 import express from "express";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import { env } from "./config/env.js";
 import { authenticate } from "./middleware/authenticate.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { auditLogsRouter } from "./modules/auditLogs/auditLogs.routes.js";
@@ -22,13 +25,40 @@ import {
 
 export const app = express();
 
-app.use(cors());
-app.use(express.json());
+// Behind a host's reverse proxy, trust its forwarded address (set TRUST_PROXY=1)
+app.set("trust proxy", env.trustProxy);
+
+// Standard security headers (also removes the X-Powered-By header)
+app.use(helmet());
+
+// Only the configured front-end address(es) may call the API from a browser
+app.use(cors({ origin: env.clientOrigins }));
+app.use(express.json({ limit: "100kb" }));
+
+// General limit per visitor, and a strict one for failed logins
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 300,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: { error: "Too many requests. Please slow down." },
+});
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  skipSuccessfulRequests: true, // only failed attempts count
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: { error: "Too many failed login attempts. Try again in 15 minutes." },
+});
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
+app.use("/api", apiLimiter);
+app.use("/api/auth/login", loginLimiter);
 app.use("/api/auth", authRouter);
 
 // Everything below requires a valid login token
