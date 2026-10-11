@@ -1,0 +1,27 @@
+.status-open { background: #fff3cd; color: #7a5b00; }
+.status-under-investigation { background: #dbeafe; color: #1e40af; }
+.status-settled { background: #d1fae5; color: #065f46; }
+.status-escalated { background: #fde2e1; color: #991b1b; }
+.status-closed { background: #e5e7eb; color: #374151; }
+
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.row > input.grow, .row > textarea.grow { flex: 1; min-width: 220px; }
+textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+  background: #fff;
+  min-height: 70px;
+}
+tr.clickable { cursor: pointer; }
+tr.clickable:hover td { background: #f2f7f5; }
+tr.selected td { background: #e6f2ee; }
+.clip { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.detail h3 { margin: 0 0 8px; }
+.detail dl { display: grid; grid-template-columns: 130px 1fr; gap: 4px 12px; margin: 0 0 12px; }
+.detail dt { color: var(--muted); }
+.detail dd { margin: 0; }
+button.secondary { background: #e8edf2; color: var(--text); }
+button.secondary:hover { background: #d9e1e9; }
