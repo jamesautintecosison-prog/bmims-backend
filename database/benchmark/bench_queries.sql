@@ -41,3 +41,11 @@ SELECT status, count(*)
   FROM service_requests
  WHERE committee_id = 1
  GROUP BY status;
+
+-- Q6: oldest pending requests across ALL committees (admin overview)
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT request_id, committee_id, date_requested
+  FROM service_requests
+ WHERE status = 'Pending'
+ ORDER BY date_requested
+ LIMIT 50;
