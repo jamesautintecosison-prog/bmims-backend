@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
     "create-user": "tsx src/scripts/createUser.ts",
-    "start": "tsx src/server.ts"
+    "start": "tsx src/server.ts",
+    "reset-password": "tsx src/scripts/resetPassword.ts"
   },
   "keywords": [],
   "author": "",
