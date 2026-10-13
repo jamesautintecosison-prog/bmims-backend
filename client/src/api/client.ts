@@ -8,6 +8,13 @@ export class ApiError extends Error {
   }
 }
 
+// Where the API lives.
+//  - Local development: empty, so requests go to the Vite dev server,
+//    which forwards /api to http://localhost:3000.
+//  - Online: set VITE_API_URL to the API's address when building, for example
+//    https://bmims-api.onrender.com (no trailing slash).
+const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? "").replace(/\/+$/, "");
+
 const TOKEN_KEY = "bmims.token";
 
 export function getToken(): string | null {
@@ -37,7 +44,7 @@ export async function api<T>(
   if (token) headers.Authorization = `Bearer ${token}`;
   if (options.body !== undefined) headers["Content-Type"] = "application/json";
 
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`${API_BASE}/api${path}`, {
     method: options.method ?? "GET",
     headers,
     body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
