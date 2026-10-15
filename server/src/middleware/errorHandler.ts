@@ -3,15 +3,21 @@ import { ZodError } from "zod";
 import { HttpError } from "../utils/httpError.js";
 
 // Messages raised on purpose by the triggers and stored procedures
-// (migrations 007, 008 and 010). They are safe to show to the caller.
+// (migrations 007, 008, 010 and 012). They are safe to show to the caller.
 const BUSINESS_RULE = new RegExp(
   [
     "Insufficient budget: [^\"\\\\\\n]*",
     "Only staff can issue certificates",
     "Only staff can add participants",
+    "Only admins can remove staff",
+    "You cannot remove your own account",
+    "Cannot remove the last admin account",
+    "Invalid password hash",
+    "Account not found",
     "Service request \\d+ does not exist",
     "Incident \\d+ does not exist",
     "Incident \\d+ is already [^\"\\\\\\n]*",
+    "Staff \\d+ does not exist",
     "Staff \\d+ is not assigned [^\"\\\\\\n]*",
     "Request \\d+ cannot be issued[^\"\\\\\\n]*",
     "Resident is not eligible[^\"\\\\\\n]*",
@@ -31,6 +37,14 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   }
   if (err instanceof ZodError) {
     return res.status(400).json({ error: "Validation failed", details: err.issues });
+  }
+
+  // A request body that is not valid JSON, or is too large, is the caller's mistake
+  if (err?.type === "entity.parse.failed") {
+    return res.status(400).json({ error: "The request body is not valid JSON" });
+  }
+  if (err?.type === "entity.too.large") {
+    return res.status(413).json({ error: "The request body is too large" });
   }
 
   // Prisma wraps database errors; the real PostgreSQL text can sit in cause/meta
