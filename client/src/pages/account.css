@@ -1,0 +1,7 @@
+.account { max-width: 420px; }
+.account label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; }
+.account .hint { color: var(--muted); font-size: 0.85rem; margin: 0; }
+.success { color: #065f46; background: #d1fae5; padding: 8px 12px; border-radius: 6px; }
+.account dl { display: grid; grid-template-columns: 110px 1fr; gap: 4px 12px; margin: 0 0 8px; }
+.account dt { color: var(--muted); }
+.account dd { margin: 0; }
