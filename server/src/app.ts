@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 import { env } from "./config/env.js";
 import { authenticate } from "./middleware/authenticate.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { accountRouter } from "./modules/account/account.routes.js";
 import { auditLogsRouter } from "./modules/auditLogs/auditLogs.routes.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
 import { budgetsRouter } from "./modules/budgets/budgets.routes.js";
@@ -22,6 +23,7 @@ import {
   households,
   staff,
 } from "./modules/shared/referenceData.js";
+import { staffAdminRouter } from "./modules/staffAdmin/staffAdmin.routes.js";
 
 export const app = express();
 
@@ -62,8 +64,10 @@ app.use("/api/auth/login", loginLimiter);
 app.use("/api/auth", authRouter);
 
 // Everything below requires a valid login token
+app.use("/api/account", authenticate, accountRouter);
 app.use("/api/residents", authenticate, residentsRouter);
 app.use("/api/households", authenticate, createCrudRouter(households));
+app.use("/api/staff", authenticate, staffAdminRouter); // POST /:id/remove, before the generic CRUD
 app.use("/api/staff", authenticate, createCrudRouter(staff));
 app.use("/api/committees", authenticate, createCrudRouter(committees));
 app.use("/api/document-types", authenticate, createCrudRouter(documentTypes));

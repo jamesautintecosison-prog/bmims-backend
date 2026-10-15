@@ -6,4 +6,9 @@ export const authRepository = {
   findUserByUsername(username: string) {
     return authClient.users.findUnique({ where: { username } });
   },
+
+  // Used to check the current password when someone changes their own
+  findUserById(userId: number) {
+    return authClient.users.findUnique({ where: { user_id: userId } });
+  },
 };
