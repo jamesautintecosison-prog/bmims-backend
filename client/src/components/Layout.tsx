@@ -10,6 +10,7 @@ interface NavItem {
 // Each tier sees only the screens that make sense for it.
 // More screens are added here as they are built.
 const NAV: NavItem[] = [
+  { to: "/", label: "Dashboard", roles: ["admin", "staff", "resident"] },
   { to: "/residents", label: "Residents", roles: ["admin", "staff"] },
   { to: "/profile", label: "My record", roles: ["resident"] },
   { to: "/requests", label: "Service requests", roles: ["admin", "staff", "resident"] },
@@ -30,7 +31,7 @@ export function Layout() {
         <strong>BMIMS</strong>
         <nav>
           {NAV.filter((item) => item.roles.includes(user.role)).map((item) => (
-            <NavLink key={item.to} to={item.to}>
+            <NavLink key={item.to} to={item.to} end={item.to === "/"}>
               {item.label}
             </NavLink>
           ))}
