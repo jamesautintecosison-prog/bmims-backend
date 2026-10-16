@@ -1,0 +1,37 @@
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px 2px 10px;
+  border-radius: 999px;
+  background: #e6f2ee;
+  color: #14532d;
+  font-size: 0.82rem;
+}
+.chip button {
+  padding: 0 6px;
+  background: none;
+  color: #991b1b;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.chip button:hover { background: none; color: #7f1d1d; }
+.secret {
+  background: #fff8e1;
+  border: 1px solid #f3d27a;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.secret code {
+  display: inline-block;
+  margin: 6px 8px 6px 0;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #e5d28a;
+  border-radius: 6px;
+  font-size: 1rem;
+  user-select: all;
+}
+.notice { background: #e8f1fb; color: #1e3a8a; padding: 8px 12px; border-radius: 6px; }

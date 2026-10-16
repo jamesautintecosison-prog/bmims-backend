@@ -24,6 +24,7 @@ import {
   staff,
 } from "./modules/shared/referenceData.js";
 import { staffAdminRouter } from "./modules/staffAdmin/staffAdmin.routes.js";
+import { usersRouter } from "./modules/users/users.routes.js";
 
 export const app = express();
 
@@ -65,6 +66,7 @@ app.use("/api/auth", authRouter);
 
 // Everything below requires a valid login token
 app.use("/api/account", authenticate, accountRouter);
+app.use("/api/users", authenticate, usersRouter);
 app.use("/api/residents", authenticate, residentsRouter);
 app.use("/api/households", authenticate, createCrudRouter(households));
 app.use("/api/staff", authenticate, staffAdminRouter); // POST /:id/remove, before the generic CRUD
