@@ -6,4 +6,5 @@ export const usersRouter = Router();
 
 usersRouter.get("/", asyncHandler(c.list));
 usersRouter.post("/staff-login", asyncHandler(c.createStaffLogin));
+usersRouter.post("/provision-residents", asyncHandler(c.provisionResidents));
 usersRouter.post("/:id/reset-password", asyncHandler(c.resetPassword));
