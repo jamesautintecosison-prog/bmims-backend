@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 import { Layout } from "./components/Layout";
 import { AccountPage } from "./pages/AccountPage";
+import { AuditPage } from "./pages/AuditPage";
+import { BudgetsPage } from "./pages/BudgetsPage";
 import { IncidentsPage } from "./pages/IncidentsPage";
 import { LoginPage } from "./pages/LoginPage";
 import { ResidentsPage } from "./pages/ResidentsPage";
@@ -23,7 +25,9 @@ export default function App() {
         <Route path="/profile" element={<ResidentsPage />} />
         <Route path="/requests" element={<ServiceRequestsPage />} />
         <Route path="/incidents" element={<IncidentsPage />} />
+        <Route path="/budgets" element={<BudgetsPage />} />
         <Route path="/staff" element={<StaffPage />} />
+        <Route path="/audit" element={<AuditPage />} />
         <Route path="/account" element={<AccountPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
