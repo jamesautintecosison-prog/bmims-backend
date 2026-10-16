@@ -1,0 +1,10 @@
+.creds { width: 100%; border-collapse: collapse; margin: 8px 0; }
+.creds th, .creds td { text-align: left; padding: 4px 10px; border-bottom: 1px solid #ecd9a0; }
+.creds code {
+  padding: 2px 8px;
+  background: #fff;
+  border: 1px solid #e5d28a;
+  border-radius: 6px;
+  user-select: all;
+}
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
