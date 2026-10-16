@@ -14,6 +14,7 @@ const NAV: NavItem[] = [
   { to: "/profile", label: "My record", roles: ["resident"] },
   { to: "/requests", label: "Service requests", roles: ["admin", "staff", "resident"] },
   { to: "/incidents", label: "Incidents", roles: ["admin", "staff", "resident"] },
+  { to: "/staff", label: "Staff", roles: ["admin"] },
   { to: "/account", label: "Account", roles: ["admin", "staff", "resident"] },
 ];
 

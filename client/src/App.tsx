@@ -6,6 +6,7 @@ import { IncidentsPage } from "./pages/IncidentsPage";
 import { LoginPage } from "./pages/LoginPage";
 import { ResidentsPage } from "./pages/ResidentsPage";
 import { ServiceRequestsPage } from "./pages/ServiceRequestsPage";
+import { StaffPage } from "./pages/StaffPage";
 
 function Home() {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/profile" element={<ResidentsPage />} />
         <Route path="/requests" element={<ServiceRequestsPage />} />
         <Route path="/incidents" element={<IncidentsPage />} />
+        <Route path="/staff" element={<StaffPage />} />
         <Route path="/account" element={<AccountPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
