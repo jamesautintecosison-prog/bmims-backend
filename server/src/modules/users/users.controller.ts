@@ -16,6 +16,10 @@ const staffLoginBody = z.object({
   role: z.enum(["admin", "staff"]),
 });
 
+const provisionBody = z.object({
+  resident_ids: z.array(z.number().int().positive()).max(50).optional(),
+});
+
 // What a caller may do here is decided by the database: only admin_role can
 // read or change the users table, so other tiers get a 403.
 export const usersController = {
@@ -26,6 +30,11 @@ export const usersController = {
   async createStaffLogin(req: Request, res: Response) {
     const result = await usersService.createStaffLogin(ctxOf(req), staffLoginBody.parse(req.body));
     res.status(201).json(result);
+  },
+
+  async provisionResidents(req: Request, res: Response) {
+    const { resident_ids } = provisionBody.parse(req.body ?? {});
+    res.status(201).json(await usersService.provisionResidents(ctxOf(req), resident_ids));
   },
 
   async resetPassword(req: Request, res: Response) {
