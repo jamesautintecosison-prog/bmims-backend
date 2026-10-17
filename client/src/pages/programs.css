@@ -1,0 +1,7 @@
+.status-enrolled { background: #dbeafe; color: #1e40af; }
+.status-completed { background: #d1fae5; color: #065f46; }
+.status-dropped { background: #e5e7eb; color: #374151; }
+
+.program-card .dates { color: var(--muted); font-size: 0.85rem; margin: 2px 0 8px; }
+.program-card p { margin: 0 0 8px; font-size: 0.9rem; }
+.program-card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
