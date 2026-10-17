@@ -1,30 +1,27 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useAuth } from "./auth/AuthContext";
 import { Layout } from "./components/Layout";
 import { AccountPage } from "./pages/AccountPage";
 import { AuditPage } from "./pages/AuditPage";
 import { BudgetsPage } from "./pages/BudgetsPage";
+import { DashboardPage } from "./pages/DashboardPage";
 import { IncidentsPage } from "./pages/IncidentsPage";
 import { LoginPage } from "./pages/LoginPage";
+import { ProgramsPage } from "./pages/ProgramsPage";
 import { ResidentsPage } from "./pages/ResidentsPage";
 import { ServiceRequestsPage } from "./pages/ServiceRequestsPage";
 import { StaffPage } from "./pages/StaffPage";
-
-function Home() {
-  const { user } = useAuth();
-  return <Navigate to={user?.role === "resident" ? "/profile" : "/residents"} replace />;
-}
 
 export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<DashboardPage />} />
         <Route path="/residents" element={<ResidentsPage />} />
         <Route path="/profile" element={<ResidentsPage />} />
         <Route path="/requests" element={<ServiceRequestsPage />} />
         <Route path="/incidents" element={<IncidentsPage />} />
+        <Route path="/programs" element={<ProgramsPage />} />
         <Route path="/budgets" element={<BudgetsPage />} />
         <Route path="/staff" element={<StaffPage />} />
         <Route path="/audit" element={<AuditPage />} />
