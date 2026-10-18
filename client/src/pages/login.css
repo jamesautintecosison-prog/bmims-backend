@@ -1,0 +1,96 @@
+/* Sign-in page: photo of Mahayag behind a short explanation and the login card */
+
+.lp {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background: #0f2e27 url("../assets/mahayag.jpg") center / cover no-repeat;
+}
+.lp-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(8, 38, 31, 0.93) 0%, rgba(8, 38, 31, 0.8) 45%, rgba(8, 38, 31, 0.5) 100%);
+}
+.lp-inner {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 400px);
+  gap: 48px;
+  align-items: center;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.lp-kicker {
+  margin: 0 0 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: #a8e0cf;
+}
+.lp-info h1 { margin: 0; font-size: 2.8rem; line-height: 1.1; color: #fff; }
+.lp-sub { margin: 4px 0 16px; font-size: 1.15rem; color: #d7efe8; }
+.lp-lead { margin: 0 0 22px; max-width: 54ch; line-height: 1.55; color: #eef7f4; }
+.lp-info h2 { margin: 0 0 8px; font-size: 1rem; color: #a8e0cf; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.lp-list { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 8px; max-width: 54ch; }
+.lp-list li { padding-left: 26px; position: relative; line-height: 1.45; }
+.lp-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.45em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #5fd0b0;
+}
+
+.lp-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; max-width: 640px; }
+.lp-role {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.lp-role strong { display: block; margin-bottom: 2px; color: #fff; }
+
+.lp-card {
+  background: #fff;
+  color: var(--text);
+  border-radius: 14px;
+  padding: 26px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+.lp-card h2 { margin: 0 0 4px; font-size: 1.4rem; }
+.lp-card .lp-hint { margin: 0 0 16px; color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
+.lp-card form { display: flex; flex-direction: column; gap: 14px; }
+.lp-card label { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; }
+.lp-pass { display: flex; gap: 6px; }
+.lp-pass input { flex: 1; min-width: 0; }
+.lp-pass button { background: #e8edf2; color: var(--text); }
+.lp-pass button:hover { background: #d9e1e9; }
+.lp-card .lp-forgot { margin: 4px 0 0; color: var(--muted); font-size: 0.82rem; }
+
+.lp-footer {
+  position: relative;
+  padding: 14px 24px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #cfe6df;
+  background: rgba(8, 38, 31, 0.7);
+}
+
+@media (max-width: 860px) {
+  .lp-inner { grid-template-columns: 1fr; gap: 28px; padding: 24px 16px; }
+  .lp-card { order: -1; }
+  .lp-info h1 { font-size: 2.1rem; }
+  .lp-overlay { background: rgba(8, 38, 31, 0.82); }
+}
