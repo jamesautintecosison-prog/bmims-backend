@@ -1,0 +1,24 @@
+/* Phone and small-window layout. Loaded last, so it adjusts the base styles. */
+
+.topbar nav { flex-wrap: wrap; }
+.tabs { overflow-x: auto; }
+
+/* Never let a two-column panel be wider than the screen */
+.two-col { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
+
+@media (max-width: 800px) {
+  /* Top bar: brand and account on the first row, the links wrap below */
+  .topbar { flex-wrap: wrap; gap: 6px 12px; padding: 10px 14px; }
+  .topbar nav { order: 3; flex: 1 1 100%; gap: 4px 14px; }
+  .topbar .who { margin-left: auto; flex-wrap: wrap; justify-content: flex-end; }
+
+  main { margin: 14px auto; padding: 0 12px; }
+  h2 { font-size: 1.15rem; }
+  .hero { padding: 14px 16px; }
+  .card:not(.table-wrap) { padding: 12px; }
+  th, td { padding: 8px 10px; }
+
+  /* Comfortable tap targets */
+  button, select, input { min-height: 36px; }
+  .link { min-height: 0; }
+}
