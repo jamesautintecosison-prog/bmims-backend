@@ -4,6 +4,7 @@ import { AccountPage } from "./pages/AccountPage";
 import { AuditPage } from "./pages/AuditPage";
 import { BudgetsPage } from "./pages/BudgetsPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { DirectoryPage } from "./pages/DirectoryPage";
 import { IncidentsPage } from "./pages/IncidentsPage";
 import { LoginPage } from "./pages/LoginPage";
 import { ProgramsPage } from "./pages/ProgramsPage";
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/incidents" element={<IncidentsPage />} />
         <Route path="/programs" element={<ProgramsPage />} />
         <Route path="/budgets" element={<BudgetsPage />} />
+        <Route path="/directory" element={<DirectoryPage />} />
         <Route path="/staff" element={<StaffPage />} />
         <Route path="/audit" element={<AuditPage />} />
         <Route path="/account" element={<AccountPage />} />
