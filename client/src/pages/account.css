@@ -1,6 +1,48 @@
-.account { max-width: 560px; gap: 14px; }
-.account label { display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem; }
-.account .hint { margin: 0; color: var(--muted); font-size: 0.88rem; }
-.account dl { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 8px 16px; margin: 0 0 10px; }
-.account dt { color: var(--muted); font-weight: 600; }
-.account dd { min-width: 0; margin: 0; overflow-wrap: anywhere; }
+.account-page { min-width: 0; }
+.account-page-header { margin: 0 0 20px; padding: 19px 20px; border: 1px solid #285d4f; border-right: 6px solid var(--gold); border-radius: 8px; background: #174b3d; box-shadow: var(--shadow-sm); }
+.account-page-header h1 { margin: 0; color: #fff; font-size: 1.8rem; }
+.account-page-header > p:last-child { margin: 5px 0 0; color: #e1eee8; }
+.account-eyebrow { margin: 0 0 4px; color: #f3bf43; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; }
+.account-content { display: grid; grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.2fr); align-items: start; gap: 18px; }
+.account-profile-card, .account-security-card { min-width: 0; margin: 0; padding: 22px; }
+.account-profile-heading { display: flex; align-items: flex-start; gap: 11px; }
+.account-profile-heading h2 { margin: 0; font-size: 1.05rem; }
+.account-profile-heading p { margin: 3px 0 0; color: var(--muted); font-size: 0.84rem; }
+.account-section-icon { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: var(--brand-soft); color: var(--brand-deep); }
+.account-profile-identity { display: flex; align-items: center; gap: 13px; margin: 22px 0 18px; padding: 15px; border: 1px solid var(--line); border-radius: 9px; background: #f8faf9; }
+.account-avatar { display: grid; width: 52px; height: 52px; flex: 0 0 auto; place-items: center; border: 2px solid #c7e3d6; border-radius: 50%; background: var(--brand-soft); color: var(--brand-deep); font-size: 1.05rem; font-weight: 800; }
+.account-identity-copy { display: grid; min-width: 0; gap: 6px; }
+.account-identity-copy > strong { overflow-wrap: anywhere; font-size: 1rem; }
+.account-role-badge { width: fit-content; padding: 3px 9px; border: 1px solid #c7e3d6; border-radius: 999px; background: #edf7f1; color: var(--brand-deep); font-size: 0.74rem; font-weight: 700; }
+.account-information { display: grid; gap: 0; margin: 0; }
+.account-information > div { display: grid; grid-template-columns: minmax(84px, 0.7fr) minmax(0, 1.3fr); gap: 12px; padding: 11px 2px; border-top: 1px solid var(--line); }
+.account-information dt { color: var(--muted); font-size: 0.82rem; font-weight: 600; }
+.account-information dd { min-width: 0; margin: 0; overflow-wrap: anywhere; color: var(--text); font-size: 0.86rem; font-weight: 700; }
+.account-password-fields { display: grid; gap: 14px; margin-top: 22px; }
+.account-field { display: grid; min-width: 0; gap: 6px; }
+.account-field > label { color: #34463d; font-size: 0.84rem; font-weight: 700; }
+.account-password-control { position: relative; display: flex; min-width: 0; }
+.account-password-control input { width: 100%; min-width: 0; min-height: 44px; padding-right: 48px; }
+.account-password-control input:disabled { background: #f4f6f5; }
+.account-password-toggle { position: absolute; top: 50%; right: 5px; display: grid; width: 36px; min-height: 36px; padding: 0; transform: translateY(-50%); place-items: center; border: 0; border-radius: 5px; background: transparent; color: #58685f; }
+.account-password-toggle:hover:not(:disabled) { border: 0; transform: translateY(-50%); background: var(--brand-soft); color: var(--brand-deep); }
+.account-password-guidance { display: flex; align-items: flex-start; gap: 9px; margin-top: 16px; padding: 11px 12px; border: 1px solid #dce9e1; border-radius: 7px; background: #f4f8f5; color: var(--brand-deep); }
+.account-password-guidance svg { flex: 0 0 auto; margin-top: 1px; }
+.account-password-guidance p { margin: 0; color: #53655b; font-size: 0.78rem; line-height: 1.5; }
+.account-message { margin: 14px 0 0; padding: 10px 12px; border-radius: 6px; font-size: 0.84rem; font-weight: 600; }
+.account-error { border: 1px solid #efc3bf; background: var(--danger-soft); color: #852a24; }
+.account-success { border: 1px solid #b5ddc4; background: var(--success-soft); color: #155338; }
+.account-form-actions { display: flex; justify-content: flex-end; margin-top: 18px; }
+.account-form-actions button { min-width: 150px; }
+
+@media (max-width: 760px) {
+  .account-content { grid-template-columns: minmax(0, 1fr); }
+  .account-profile-card, .account-security-card { padding: 18px; }
+}
+
+@media (max-width: 420px) {
+  .account-page-header { padding: 16px; }
+  .account-page-header h1 { font-size: 1.5rem; }
+  .account-information > div { grid-template-columns: minmax(76px, 0.65fr) minmax(0, 1.35fr); }
+  .account-form-actions button { width: 100%; }
+}

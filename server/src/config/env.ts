@@ -33,4 +33,7 @@ export const env = {
   // How many reverse proxies sit in front of the API: 0 locally, 1 on most hosts.
   // Needed so rate limiting sees each visitor's real address.
   trustProxy: Number(process.env.TRUST_PROXY ?? 0),
+  paymongoSecretKey: process.env.PAYMONGO_SECRET_KEY,
+  paymongoWebhookSecret: process.env.PAYMONGO_WEBHOOK_SECRET,
+  clientUrl: process.env.CLIENT_URL ?? "http://localhost:5173",
 };

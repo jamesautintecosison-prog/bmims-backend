@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 import { env } from "./config/env.js";
 import { authenticate } from "./middleware/authenticate.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { asyncHandler } from "./utils/asyncHandler.js";
 import { accountRouter } from "./modules/account/account.routes.js";
 import { auditLogsRouter } from "./modules/auditLogs/auditLogs.routes.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
@@ -14,6 +15,7 @@ import { expensesRouter } from "./modules/expenses/expenses.routes.js";
 import { incidentsRouter } from "./modules/incidents/incidents.routes.js";
 import { residentsRouter } from "./modules/residents/residents.routes.js";
 import { serviceRequestsRouter } from "./modules/serviceRequests/serviceRequests.routes.js";
+import { serviceRequestsController } from "./modules/serviceRequests/serviceRequests.controller.js";
 import { createCrudRouter } from "./modules/shared/crud.js";
 import { enrollments, staffAssignments } from "./modules/shared/membershipData.js";
 import {
@@ -36,6 +38,10 @@ app.use(helmet());
 
 // Only the configured front-end address(es) may call the API from a browser
 app.use(cors({ origin: env.clientOrigins }));
+app.use(
+  "/api/payments/webhook",
+  express.raw({ type: "application/json", limit: "100kb" }),
+);
 app.use(express.json({ limit: "100kb" }));
 
 // General limit per visitor, and a strict one for failed logins
@@ -61,6 +67,7 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api", apiLimiter);
+app.post("/api/payments/webhook", asyncHandler(serviceRequestsController.paymongoWebhook));
 app.use("/api/auth/login", loginLimiter);
 app.use("/api/auth", authRouter);
 

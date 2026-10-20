@@ -172,22 +172,70 @@ model residents {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model service_requests {
-  request_id         Int            @id @default(autoincrement())
-  resident_id        Int
-  doc_type_id        Int
-  committee_id       Int
-  issued_by_staff_id Int?
-  status             String         @default("Pending") @db.VarChar(20)
-  reference_number   String?        @unique @db.VarChar(30)
-  date_requested     DateTime       @default(now()) @db.Timestamptz(6)
-  date_released      DateTime?      @db.Timestamptz(6)
-  committees         committees     @relation(fields: [committee_id], references: [committee_id])
-  document_types     document_types @relation(fields: [doc_type_id], references: [doc_type_id])
-  staff              staff?         @relation(fields: [issued_by_staff_id], references: [staff_id], onDelete: Restrict)
-  residents          residents      @relation(fields: [resident_id], references: [resident_id])
+  request_id               Int                        @id @default(autoincrement())
+  resident_id              Int
+  doc_type_id              Int
+  committee_id             Int
+  issued_by_staff_id       Int?
+  status                   String                     @default("Pending") @db.VarChar(20)
+  reference_number         String?                    @unique @db.VarChar(30)
+  date_requested           DateTime                   @default(now()) @db.Timestamptz(6)
+  date_released            DateTime?                  @db.Timestamptz(6)
+  cancelled_at             DateTime?                  @db.Timestamptz(6)
+  committees               committees                 @relation(fields: [committee_id], references: [committee_id])
+  document_types           document_types             @relation(fields: [doc_type_id], references: [doc_type_id])
+  staff                    staff?                     @relation(fields: [issued_by_staff_id], references: [staff_id], onDelete: Restrict)
+  residents                residents                  @relation(fields: [resident_id], references: [resident_id])
+  service_request_payments service_request_payments[]
 
   @@index([committee_id], map: "idx_requests_committee")
   @@index([resident_id], map: "idx_requests_resident")
+}
+
+model service_request_payments {
+  payment_record_id              Int                              @id @default(autoincrement())
+  request_id                     Int
+  payment_method                 String                           @db.VarChar(20)
+  amount                         Decimal                          @db.Decimal(10, 2)
+  currency                       String                           @default("PHP") @db.VarChar(3)
+  payment_status                 String                           @db.VarChar(20)
+  refund_status                  String                           @default("Not Requested") @db.VarChar(20)
+  checkout_session_id            String?                          @unique @db.VarChar(100)
+  checkout_url                   String?
+  payment_reference              String?                          @unique @db.VarChar(100)
+  refund_reference               String?                          @unique @db.VarChar(100)
+  refund_external_reference      String?                          @db.VarChar(100)
+  created_by_user_id             Int?
+  confirmed_by_user_id           Int?
+  refund_confirmed_by_user_id    Int?
+  created_at                     DateTime                         @default(now()) @db.Timestamptz(6)
+  updated_at                     DateTime                         @default(now()) @db.Timestamptz(6)
+  paid_at                        DateTime?                        @db.Timestamptz(6)
+  refunded_at                    DateTime?                        @db.Timestamptz(6)
+  service_requests               service_requests                 @relation(fields: [request_id], references: [request_id])
+  created_by                     users?                           @relation("payment_created_by", fields: [created_by_user_id], references: [user_id], onDelete: SetNull)
+  confirmed_by                   users?                           @relation("payment_confirmed_by", fields: [confirmed_by_user_id], references: [user_id], onDelete: SetNull)
+  refund_confirmed_by            users?                           @relation("payment_refund_confirmed_by", fields: [refund_confirmed_by_user_id], references: [user_id], onDelete: SetNull)
+  service_request_payment_events service_request_payment_events[]
+
+  @@index([request_id, created_at(sort: Desc)], map: "idx_service_request_payments_request")
+  @@map("service_request_payments")
+}
+
+model service_request_payment_events {
+  payment_event_id  BigInt                   @id @default(autoincrement())
+  payment_record_id Int
+  event_type        String                   @db.VarChar(40)
+  payment_status    String                   @db.VarChar(20)
+  reference         String?                  @db.VarChar(100)
+  notes             String?
+  actor_user_id     Int?
+  created_at        DateTime                 @default(now()) @db.Timestamptz(6)
+  payments          service_request_payments @relation(fields: [payment_record_id], references: [payment_record_id])
+  actor             users?                   @relation("payment_event_actor", fields: [actor_user_id], references: [user_id], onDelete: SetNull)
+
+  @@index([payment_record_id, created_at], map: "idx_service_request_payment_events_payment")
+  @@map("service_request_payment_events")
 }
 
 model staff {
@@ -219,14 +267,18 @@ model staff_committee_assignments {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model users {
-  user_id       Int          @id @default(autoincrement())
-  staff_id      Int?         @unique
-  resident_id   Int?         @unique
-  username      String       @unique @db.VarChar(50)
-  password_hash String       @db.VarChar(255)
-  role          String       @db.VarChar(20)
-  created_at    DateTime     @default(now()) @db.Timestamptz(6)
-  audit_logs    audit_logs[]
-  residents     residents?   @relation(fields: [resident_id], references: [resident_id], onDelete: Restrict)
-  staff         staff?       @relation(fields: [staff_id], references: [staff_id], onDelete: Restrict)
+  user_id            Int                              @id @default(autoincrement())
+  staff_id           Int?                             @unique
+  resident_id        Int?                             @unique
+  username           String                           @unique @db.VarChar(50)
+  password_hash      String                           @db.VarChar(255)
+  role               String                           @db.VarChar(20)
+  created_at         DateTime                         @default(now()) @db.Timestamptz(6)
+  audit_logs         audit_logs[]
+  residents          residents?                       @relation(fields: [resident_id], references: [resident_id], onDelete: Restrict)
+  staff              staff?                           @relation(fields: [staff_id], references: [staff_id], onDelete: Restrict)
+  payments_created   service_request_payments[]       @relation("payment_created_by")
+  payments_confirmed service_request_payments[]       @relation("payment_confirmed_by")
+  refunds_confirmed  service_request_payments[]       @relation("payment_refund_confirmed_by")
+  payment_events     service_request_payment_events[] @relation("payment_event_actor")
 }

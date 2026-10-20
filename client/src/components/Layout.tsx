@@ -47,6 +47,7 @@ export function Layout() {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [showSignOutConfirmation, setShowSignOutConfirmation] = useState(false);
   const currentPath = normalizeAppRoute(location.pathname);
   const currentPage = NAV.find((item) => item.to === currentPath) ?? NAV[0];
   if (!user) return <Navigate to="/login" replace state={{ from: location }} />;
@@ -106,7 +107,12 @@ export function Layout() {
           <div className="topbar-user">
             <span className="avatar-pill">{user.username.slice(0, 2).toUpperCase()}</span>
             <span className="topbar-user-name"><strong>{user.username}</strong><small>{user.role}</small></span>
-            <button type="button" className="topbar-signout" onClick={logout} aria-label="Sign out">
+            <button
+              type="button"
+              className="topbar-signout"
+              onClick={() => setShowSignOutConfirmation(true)}
+              aria-label="Sign out"
+            >
               <LogOut size={17} aria-hidden="true" /><span>Sign out</span>
             </button>
           </div>
@@ -116,6 +122,41 @@ export function Layout() {
           <Outlet />
         </main>
       </div>
+      {showSignOutConfirmation && (
+        <div
+          className="signout-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowSignOutConfirmation(false);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") setShowSignOutConfirmation(false);
+          }}
+        >
+          <section
+            className="signout-dialog"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="signout-title"
+            aria-describedby="signout-description"
+          >
+            <h2 id="signout-title">Sign out?</h2>
+            <p id="signout-description">Are you sure you want to sign out?</p>
+            <div className="signout-actions">
+              <button
+                type="button"
+                className="secondary"
+                autoFocus
+                onClick={() => setShowSignOutConfirmation(false)}
+              >
+                Stay signed in
+              </button>
+              <button type="button" className="danger" onClick={logout}>
+                Yes, sign out
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }

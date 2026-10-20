@@ -71,6 +71,10 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     return res.status(409).json({ error: "A related record is missing, or other records still depend on this one" });
   }
   if (/permission denied/i.test(text) || code === "42501") {
+    console.error("Database permission denied", {
+      code: code ?? "42501",
+      message: err?.message ?? "Database operation was denied",
+    });
     return res.status(403).json({ error: "Your database role is not allowed to do this" });
   }
   if (/violates check constraint/i.test(text) || /violates not-null constraint/i.test(text)) {
