@@ -15,3 +15,72 @@
 .field input, .field select, .field textarea { color: var(--text); font-size: 1rem; }
 .form-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
 .form-row .grow { flex: 1; min-width: min(220px, 100%); }
+
+.directory-form { gap: 14px; }
+.directory-form-heading { margin: 0; font-size: 1.05rem; }
+.directory-form-heading:focus { outline: 2px solid var(--brand); outline-offset: 4px; }
+.directory-form-fields { align-items: flex-start; }
+.directory-field { display: flex; min-width: min(190px, 100%); flex: 1 1 190px; flex-direction: column; gap: 6px; color: #34483f; font-size: 0.86rem; font-weight: 600; }
+.directory-field.grow { flex: 2 1 260px; }
+.directory-field > label { color: #34483f; }
+.directory-field > label span { color: #8a3029; }
+.directory-field input, .directory-field select, .directory-field textarea { width: 100%; }
+.directory-field textarea { min-height: 82px; }
+.directory-field input:focus-visible, .directory-field select:focus-visible, .directory-field textarea:focus-visible,
+.directory-search input:focus-visible, .directory-resource button:focus-visible {
+  outline: 3px solid #176b57;
+  outline-offset: 2px;
+}
+.directory-field [aria-invalid="true"] { border-color: #a6322b; }
+.directory-field-error { color: #852a24; font-size: 0.8rem; font-weight: 700; }
+.directory-form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+.directory-live-status { color: var(--muted); font-size: 0.84rem; }
+.directory-table-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 20px 2px 5px; }
+.directory-table-heading h3 { margin: 0; }
+.directory-table-heading h3:focus { outline: 2px solid var(--brand); outline-offset: 4px; }
+.directory-search { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: #34483f; font-size: 0.82rem; font-weight: 600; }
+.directory-search input { min-width: 180px; min-height: 38px; }
+.directory-search .link { padding: 5px 8px; }
+.directory-result-count { min-height: 1.3em; margin: 0 2px 8px; color: var(--muted); font-size: 0.82rem; }
+.directory-table-wrap { min-width: 0; }
+.directory-table-wrap:focus-visible { outline: 3px solid #176b57; outline-offset: 2px; }
+.directory-table-wrap table { min-width: 620px; }
+.directory-table-wrap th { white-space: nowrap; }
+.directory-table-wrap td { overflow-wrap: anywhere; }
+.directory-table-wrap .actions { flex-wrap: nowrap; }
+.directory-table-wrap .actions button { min-height: 36px; }
+.directory-row-progress { color: var(--muted); font-size: 0.78rem; white-space: nowrap; }
+.directory-empty-cell { padding: 28px 14px; text-align: center; }
+.directory-empty-cell strong, .directory-empty-cell span { display: block; }
+.directory-empty-cell span { margin-top: 4px; color: var(--muted); }
+.directory-empty-cell button { margin-top: 8px; }
+.directory-loading { color: var(--muted); }
+.directory-delete-dialog { color: var(--text); }
+.directory-delete-dialog > p { color: var(--text); }
+.directory-dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+.directory-delete-dialog [role="status"] { margin: 12px 0 0; color: var(--muted); font-size: 0.84rem; }
+.directory-tabs [role="tab"]:focus-visible { outline: 3px solid #176b57; outline-offset: 2px; z-index: 1; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
+}
+
+@media (max-width: 680px) {
+  .directory-table-heading { align-items: stretch; flex-direction: column; }
+  .directory-search { align-items: flex-start; flex-direction: column; }
+  .directory-search input { width: 100%; min-width: 0; }
+  .directory-search button { align-self: flex-start; }
+  .directory-form-fields > * { flex: 1 1 100%; }
+  .directory-form-actions > button { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .directory-resource *, .directory-resource *::before, .directory-resource *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

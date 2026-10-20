@@ -101,6 +101,8 @@ export function ProgramsPage() {
   const enrolledCount = (programId: number) =>
     enrollments.filter((e) => e.program_id === programId && e.status !== "Dropped").length;
   const myEnrollment = (programId: number) => enrollments.find((e) => e.program_id === programId);
+  const activeEnrollments = enrollments.filter((enrollment) => enrollment.status === "Enrolled").length;
+  const completedEnrollments = enrollments.filter((enrollment) => enrollment.status === "Completed").length;
 
   async function run(action: () => Promise<void>) {
     setError(null);
@@ -161,6 +163,12 @@ export function ProgramsPage() {
       <h2>Programs</h2>
       {error && <p className="error">{error}</p>}
       {notice && <p className="notice">{notice}</p>}
+
+      <div className="module-summary-grid" aria-label="Program summary" aria-busy={loading}>
+        <article className="module-summary-card"><span>Programs</span><strong>{loading ? "—" : programs.length}</strong><small>Available programs</small></article>
+        <article className="module-summary-card"><span>Active enrollments</span><strong>{loading ? "—" : activeEnrollments}</strong><small>Residents currently enrolled</small></article>
+        <article className="module-summary-card"><span>Completed enrollments</span><strong>{loading ? "—" : completedEnrollments}</strong><small>Residents who completed a program</small></article>
+      </div>
 
       {loading ? (
         <p className="muted">Loading...</p>

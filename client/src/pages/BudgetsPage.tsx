@@ -93,6 +93,9 @@ export function BudgetsPage() {
       ),
     [budgets, committeeName],
   );
+  const totalAllocated = budgets.reduce((sum, budget) => sum + Number(budget.allocated_amount), 0);
+  const totalRemaining = budgets.reduce((sum, budget) => sum + Number(budget.remaining_amount), 0);
+  const totalSpent = totalAllocated - totalRemaining;
 
   async function run(action: () => Promise<void>) {
     setError(null);
@@ -142,6 +145,12 @@ export function BudgetsPage() {
       <h2>Budgets and expenses</h2>
       {error && <p className="error">{error}</p>}
       {notice && <p className="notice">{notice}</p>}
+
+      <div className="module-summary-grid budget-summary-grid" aria-label="Budget summary" aria-busy={loading}>
+        <article className="module-summary-card"><span>Allocated funds</span><strong>{loading ? "—" : peso(totalAllocated)}</strong><small>Across visible committee budgets</small></article>
+        <article className="module-summary-card"><span>Expenses</span><strong>{loading ? "—" : peso(totalSpent)}</strong><small>Recorded spending to date</small></article>
+        <article className="module-summary-card"><span>Remaining balance</span><strong>{loading ? "—" : peso(totalRemaining)}</strong><small>Available across all budgets</small></article>
+      </div>
 
       {loading ? (
         <p className="muted">Loading...</p>

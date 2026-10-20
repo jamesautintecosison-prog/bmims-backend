@@ -115,6 +115,9 @@ export function IncidentsPage() {
     [residents],
   );
   const who = (id: number) => residentName.get(id) ?? `#${id}`;
+  const openIncidents = incidents.filter((incident) => !["Settled", "Closed"].includes(incident.status));
+  const underInvestigation = incidents.filter((incident) => incident.status === "Under Investigation").length;
+  const resolvedIncidents = incidents.filter((incident) => ["Settled", "Closed"].includes(incident.status)).length;
 
   function updateRow(index: number, patch: Partial<Row>) {
     setRows((current) => current.map((r, i) => (i === index ? { ...r, ...patch } : r)));
@@ -206,6 +209,13 @@ export function IncidentsPage() {
     <section>
       <h2>Incidents</h2>
       {error && <p className="error">{error}</p>}
+
+      <div className="module-summary-grid" aria-label="Incident summary" aria-busy={loading}>
+        <article className="module-summary-card"><span>Total incidents</span><strong>{loading ? "—" : incidents.length}</strong><small>All recorded incidents</small></article>
+        <article className="module-summary-card"><span>Open</span><strong>{loading ? "—" : openIncidents.length}</strong><small>Requiring follow-up</small></article>
+        <article className="module-summary-card"><span>Under investigation</span><strong>{loading ? "—" : underInvestigation}</strong><small>Currently being reviewed</small></article>
+        <article className="module-summary-card"><span>Settled or closed</span><strong>{loading ? "—" : resolvedIncidents}</strong><small>Resolved incidents</small></article>
+      </div>
 
       <form className="card stack" onSubmit={file}>
         <strong>File a new incident</strong>

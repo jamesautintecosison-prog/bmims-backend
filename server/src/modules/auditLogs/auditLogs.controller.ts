@@ -7,10 +7,22 @@ import { auditLogsRepository as repo } from "./auditLogs.repository.js";
 const filterQuery = pageQuery.extend({
   table_name: z.string().trim().min(1).max(63).optional(),
   record_id: z.coerce.number().int().positive().optional(),
+  search: z.string().trim().max(100).optional(),
+  action_type: z.enum(["INSERT", "UPDATE", "DELETE"]).optional(),
+  date_from: z.string().date().optional(),
+  date_to: z.string().date().optional(),
+});
+
+const summaryQuery = z.object({
+  day_start: z.string().datetime({ offset: true }),
+  day_end: z.string().datetime({ offset: true }),
 });
 
 export const auditLogsController = {
   async list(req: Request, res: Response) {
     res.json(await repo.list(ctxOf(req), filterQuery.parse(req.query)));
+  },
+  async summary(req: Request, res: Response) {
+    res.json(await repo.summary(ctxOf(req), summaryQuery.parse(req.query)));
   },
 };

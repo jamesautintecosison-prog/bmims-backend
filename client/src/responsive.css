@@ -28,6 +28,8 @@
   .topbar-user-name { display: none; }
   .topbar-signout { min-height: 36px; margin-left: 0; padding: 7px 9px; }
   .topbar-signout span { display: none; }
+  .signout-actions { flex-direction: column-reverse; }
+  .signout-actions button { width: 100%; }
   .stats, .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .two-col { grid-template-columns: minmax(0, 1fr); }
   .card { padding: 14px; }

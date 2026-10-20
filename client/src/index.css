@@ -277,6 +277,12 @@ p { line-height: 1.6; }
 .topbar-signout { display: inline-flex; min-height: 36px; align-items: center; gap: 7px; margin-left: 8px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--text); font-size: 0.82rem; }
 .topbar-signout:hover { border-color: #c3d2ca; background: #f4f7f5; }
 
+.signout-backdrop { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 20px; background: rgb(7 36 29 / 48%); }
+.signout-dialog { width: min(100%, 420px); padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: var(--shadow-md); }
+.signout-dialog h2 { margin: 0 0 10px; font-size: 1.2rem; }
+.signout-dialog p { margin: 0; color: var(--muted); }
+.signout-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+
 main { padding: 0; }
 
 .card, .panel, .budget-card, .stat, .data-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); }

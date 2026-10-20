@@ -95,6 +95,7 @@ export function StaffPage() {
   }, [assignments]);
 
   const withoutLogin = staff.filter((s) => !loginByStaff.has(s.staff_id));
+  const activeLogins = staff.length - withoutLogin.length;
 
   // Runs one action, reports any database message, then refreshes the lists
   async function run(action: () => Promise<void>) {
@@ -203,6 +204,12 @@ export function StaffPage() {
       <h2>Staff</h2>
       {error && <p className="error">{error}</p>}
       {notice && <p className="notice">{notice}</p>}
+
+      <div className="module-summary-grid" aria-label="Staff summary" aria-busy={loading}>
+        <article className="module-summary-card"><span>Staff members</span><strong>{loading ? "—" : staff.length}</strong><small>Staff records</small></article>
+        <article className="module-summary-card"><span>Committee assignments</span><strong>{loading ? "—" : assignments.length}</strong><small>Current assignments</small></article>
+        <article className="module-summary-card"><span>Login accounts</span><strong>{loading ? "—" : activeLogins}</strong><small>{loading ? "Loading accounts…" : `${withoutLogin.length} without a login`}</small></article>
+      </div>
 
       {secret && (
         <div className="secret">
