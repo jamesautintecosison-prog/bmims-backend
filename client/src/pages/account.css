@@ -1,7 +1,6 @@
-.account { max-width: 420px; }
-.account label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; }
-.account .hint { color: var(--muted); font-size: 0.85rem; margin: 0; }
-.success { color: #065f46; background: #d1fae5; padding: 8px 12px; border-radius: 6px; }
-.account dl { display: grid; grid-template-columns: 110px 1fr; gap: 4px 12px; margin: 0 0 8px; }
-.account dt { color: var(--muted); }
-.account dd { margin: 0; }
+.account { max-width: 560px; gap: 14px; }
+.account label { display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem; }
+.account .hint { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.account dl { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 8px 16px; margin: 0 0 10px; }
+.account dt { color: var(--muted); font-weight: 600; }
+.account dd { min-width: 0; margin: 0; overflow-wrap: anywhere; }
