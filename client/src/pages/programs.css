@@ -1,7 +1,8 @@
-.status-enrolled { background: #dbeafe; color: #1e40af; }
-.status-completed { background: #d1fae5; color: #065f46; }
-.status-dropped { background: #e5e7eb; color: #374151; }
+.status-enrolled { border-color: #c8dce9; background: var(--info-soft); color: #244d6a; }
+.status-completed { border-color: #b5ddc4; background: var(--success-soft); color: #155338; }
+.status-dropped { border-color: var(--line); background: #eef1ef; color: #43534b; }
 
-.program-card .dates { color: var(--muted); font-size: 0.85rem; margin: 2px 0 8px; }
-.program-card p { margin: 0 0 8px; font-size: 0.9rem; }
-.program-card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.program-card .dates { margin: 5px 0 10px; color: var(--muted); font-size: 0.88rem; }
+.program-card p { margin: 0 0 12px; font-size: 0.94rem; }
+.program-card .foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+.program-card { display: flex; flex-direction: column; min-height: 190px; }

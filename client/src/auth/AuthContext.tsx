@@ -21,7 +21,7 @@ export interface User {
 
 interface AuthState {
   user: User | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<User>;
   logout: () => void;
 }
 
@@ -54,6 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(result.token);
     sessionStorage.setItem(USER_KEY, JSON.stringify(result.user));
     setUser(result.user);
+    return result.user;
   }, []);
 
   // An expired or rejected token signs the user out everywhere
